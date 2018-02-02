@@ -56,6 +56,28 @@
       for(const stat of manual.stats){
         stats.appendChild(row(stat, manual.base));
       }
+
+      // Respond to button clicks
+      stats.addEventListener('click', function(event) {
+        const clicked = event.target;
+        if (clicked.tagName === 'BUTTON'){
+          const stat = clicked.parentElement.parentElement.querySelector('input');
+          const request = {
+            stat: parseInt(stat.value),
+            points: parseInt(points.value)
+          };
+
+          // Ask the manual to adjust the numbers
+          if (clicked.textContent === '+'){
+            manual.increment(request);
+          } else {
+            manual.decrement(request);
+          }
+
+          stat.value = request.stat;
+          points.value = request.points;
+        }
+      });
     </script>
   </body>
 </html>
